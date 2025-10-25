@@ -51,51 +51,6 @@
 		  <div class = "border">
 	  
     			  <br></br>
-	def decide(state):
-    """
-    Your algorithm to select participants for interviews.
-    
-    Args:
-        state: SimulationState with current information
-            - state.time: current time (0-500)
-            - state.participants: list of all Participant objects
-            - state.sent_at: dict of {participant_id: time_sent}
-            - state.accepted: set of participant_ids who accepted
-            - state.target_interviews: always 50
-    
-    Returns:
-        {"toSend": ["u0", "u5", ...], "toCancel": ["u3", ...]}
-    """
-    to_send = []
-    to_cancel = []
-    
-    # Strategy: Send in waves to ensure we reach 50 acceptances
-    # Wave 1: 150 participants at t=0 (expect ~40 acceptances)
-    # Wave 2: 100 more at t=20 if needed
-    # Wave 3: 150 more at t=50 if still short
-    
-    if state.time == 0:
-        unsent = [p for p in state.participants 
-                 if p.id not in state.sent_at]
-        unsent.sort(key=lambda p: p.relevance, reverse=True)
-        to_send = [p.id for p in unsent[:150]]
-    
-    elif state.time == 20 and len(state.accepted) < state.target_interviews:
-        unsent = [p for p in state.participants 
-                 if p.id not in state.sent_at and p.id not in state.accepted]
-        unsent.sort(key=lambda p: p.relevance, reverse=True)
-        to_send = [p.id for p in unsent[:100]]
-    
-    elif state.time == 50 and len(state.accepted) < state.target_interviews:
-        unsent = [p for p in state.participants 
-                 if p.id not in state.sent_at and p.id not in state.accepted]
-        unsent.sort(key=lambda p: p.relevance, reverse=True)
-        to_send = [p.id for p in unsent[:150]]
-    
-    print(to_Send)
-    return {"toSend": to_send, "toCancel": to_cancel}
-()
-	  
 
 	  </body>
 	</html>
